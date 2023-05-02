@@ -1,6 +1,7 @@
 const express = require("express");
 const Shortener = require("./shortener"); // Assuming shortener.js is in the same directory
 var cons = require("consolidate");
+const dotenv = require("dotenv").config();
 
 const path = require("path");
 const app = express();
@@ -25,7 +26,5 @@ app.get("/:shortUrl", (req, res) => {
 });
 
 app.listen(process.env.PORT, () => {
-  console.log(
-    "Project url: https://" + process.env.PORT + ".sock.hicounselor.com"
-  );
+  console.log("Project url: http://localhost:" + process.env.PORT);
 });
