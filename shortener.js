@@ -1,4 +1,4 @@
-const Database = require('./database'); // Assuming database.js is in the same directory
+const Database = require("./database"); // Assuming database.js is in the same directory
 
 class Shortener {
   constructor() {
@@ -6,16 +6,18 @@ class Shortener {
   }
 
   async shorten(url) {
-    return null;
+    let shortUrl = this.generateShortUrl();
+    this.db.insert(url, shortUrl);
+    return shortUrl;
   }
 
   generateShortUrl() {
-    return null;
-    
+    return Math.random().toString(36).substring(2, 7);
   }
 
   async getUrl(shortUrl) {
-    return null;
+    await this.db.getUrl(shortUrl);
+    return this.db.data?.url;
   }
 }
 

@@ -3,14 +3,16 @@
 
 <head>
    <title>URL Shortener</title>
+   <link rel="stylesheet" href="home.css">
 </head>
 
 <body>
    <h1>URL Shortener</h1>
-   <form method="post" action="/shorten">
+   <form method="post" class="form1" action="/shorten">
       <label for="url">Enter URL to shorten:</label>
       <input type="text" name="url" id="url" required>
       <button type="submit">Shorten</button>
+      {{error}}
    </form>
 </body>
 
