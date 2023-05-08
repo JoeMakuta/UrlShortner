@@ -17,7 +17,7 @@ class Shortener {
 
   async getUrl(shortUrl) {
     const url = await this.db.getUrl(shortUrl);
-    return url.url;
+    return url?.url;
   }
 }
 
