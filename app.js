@@ -26,8 +26,10 @@ app.post("/shorten", async (req, res) => {
 
   if (url.match(testUrlRegex)) {
     const shortUrl = await shortener1.shorten(req.body.url);
-    // const fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
-    res.render("result.html", { shortUrl });
+    res.render("result.html", {
+      base: req.protocol + "://" + req.get("host") + "/",
+      shortUrl,
+    });
   } else {
     res.redirect("/");
   }
@@ -36,7 +38,7 @@ app.post("/shorten", async (req, res) => {
 app.get("/:shortUrl", async (req, res) => {
   console.log("Request params : ", req.params);
   const url = await shortener1.getUrl(req.params.shortUrl);
-  await console.log("The returned url is : ", url);
+  console.log("The returned url is : ", url);
   if (url) {
     res.redirect(url);
   } else {
