@@ -9,12 +9,11 @@ const sqlite3 = require("sqlite3").verbose();
 
 class Database {
   constructor() {
-    this.data = null;
     this.db = new sqlite3.Database("db.sqlite", (err) => {
       if (!err) {
         console.log("Connected to the SQLite database.");
         this.db.run(
-          `CREATE TABLE IF NOT EXISTS links ( id INTEGER PRIMARY KEY AUTOINCREMENT, url text UNIQUE,shortUrl text UNIQUE)`,
+          `CREATE TABLE IF NOT EXISTS links ( id INTEGER PRIMARY KEY AUTOINCREMENT, url text,shortUrl text UNIQUE)`,
           (err) => {
             if (!err) {
               console.log("Table created successfully !");
@@ -44,15 +43,17 @@ class Database {
 
   async getUrl(short_url) {
     //read url using short_url
-
-    let find = "SELECT * FROM links WHERE shortUrl=?";
-    await this.db.get(find, [short_url], (error, row) => {
-      if (!error) {
-        console.log("Got Data from DB Successfully", row);
-        this.data = row;
-      } else {
-        console.log("Got error when trying to get Data from DB", error);
-      }
+    return new Promise(async (resolve, rejected) => {
+      let find = "SELECT * FROM links WHERE shortUrl=?";
+      await this.db.get(find, [short_url], (error, row) => {
+        if (!error) {
+          console.log("Got Data from DB Successfully : ", row);
+          resolve(row);
+        } else {
+          console.log("Got error when trying to get Data from DB : ", error);
+          rejected();
+        }
+      });
     });
   }
 }
