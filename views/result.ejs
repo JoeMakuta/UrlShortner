@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>URL Shortener</title>
+   <link rel="stylesheet" href="/css/result.css">
+   <script src="/js/script.js"></script>
+</head>
+
+<body>
+   <main class="main-home">
+      <form method="get" action="/">
+         <div>
+            <h1 class=" title ">URL <span>Shortener</span></h1>
+            <p>The Shortened url is : </p>
+            <div>
+               <input placeholder="Enter the link here : " type="url" value="<%= base + shortUrl %>" name="url"
+                  id="result" disabled required>
+               <button onclick={copyToClipBoard()} id="copy" type="button">Copy</button>
+            </div>
+            <p>
+               ShortURL is a free tool to shorten URLs and generate short links
+               URL shortener allows to create a shortened link making it easy to share.
+            </p>
+            <button type="submit">Shorten another URL</button>
+         </div>
+
+      </form>
+   </main>
+
+</body>
+
+</html>

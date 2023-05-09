@@ -1,4 +1,5 @@
-const sqlite3 = require("sqlite3").verbose();
+import sqlite3 from "sqlite3";
+sqlite3.verbose();
 /////////////////////////////////////////////////////////////
 ///
 ///You can select a database based on your specific needs.///
@@ -13,7 +14,7 @@ class Database {
       if (!err) {
         console.log("Connected to the SQLite database.");
         this.db.run(
-          `CREATE TABLE IF NOT EXISTS links ( id INTEGER PRIMARY KEY AUTOINCREMENT, url text,shortUrl text UNIQUE)`,
+          `CREATE TABLE IF NOT EXISTS links ( id INTEGER PRIMARY KEY AUTOINCREMENT, url text UNIQUE,shortUrl text UNIQUE)`,
           (err) => {
             if (!err) {
               console.log("Table created successfully !");
@@ -30,14 +31,25 @@ class Database {
 
   async insert(url, short_url) {
     //Insert url with short code
-
     let insert = "INSERT INTO links (url, shortUrl) VALUES (?,?)";
     this.db.run(insert, [url, short_url], (error) => {
       if (!error) {
-        console.log("Data Inserted Successfully");
       } else {
-        console.log("Error trying to insert Data", error);
       }
+    });
+  }
+
+  async getLongUrl(url) {
+    //read url using short_url
+    return new Promise(async (resolve, rejected) => {
+      let find = "SELECT * FROM links WHERE url=?";
+      await this.db.get(find, [url], (error, row) => {
+        if (!error) {
+          resolve(row);
+        } else {
+          rejected();
+        }
+      });
     });
   }
 
@@ -47,10 +59,8 @@ class Database {
       let find = "SELECT * FROM links WHERE shortUrl=?";
       await this.db.get(find, [short_url], (error, row) => {
         if (!error) {
-          console.log("Got Data from DB Successfully : ", row);
           resolve(row);
         } else {
-          console.log("Got error when trying to get Data from DB : ", error);
           rejected();
         }
       });
@@ -58,4 +68,4 @@ class Database {
   }
 }
 
-module.exports = Database;
+export default Database;

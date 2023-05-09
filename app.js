@@ -1,22 +1,25 @@
-const express = require("express");
-const Shortener = require("./shortener"); // Assuming shortener.js is in the same directory
-var cons = require("consolidate");
-require("dotenv").config();
+import express from "express";
+import shortener from "./shortener.js"; // Assuming shortener.js is in the same directory
+import clipboardy from "clipboardy";
+import { fileURLToPath } from "url";
+import dotenv from "dotenv";
+dotenv.config();
 
-const path = require("path");
+import path from "path";
+
+const shortener1 = new shortener();
 const app = express();
-const shortener1 = new Shortener();
-
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const testUrlRegex =
   /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
 
 app.use(express.urlencoded({ extended: true }));
-app.engine("html", cons.swig);
-app.set("views", path.join(__dirname, "views")); // Set the template folder to an empty string to use the root directory
-app.set("view engine", "html"); // Set the view engine to handle HTML files
+app.set("views", "views"); // Set the template folder to an empty string to use the root directory
+app.set("view engine", "ejs"); // Set the view engine to handle HTML files
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
-  res.render("home.html");
+  res.render("home.ejs");
 });
 
 app.post("/shorten", async (req, res) => {
@@ -26,7 +29,7 @@ app.post("/shorten", async (req, res) => {
 
   if (url.match(testUrlRegex)) {
     const shortUrl = await shortener1.shorten(req.body.url);
-    res.render("result.html", {
+    res.render("result.ejs", {
       base: req.protocol + "://" + req.get("host") + "/",
       shortUrl,
     });
@@ -36,9 +39,7 @@ app.post("/shorten", async (req, res) => {
 });
 
 app.get("/:shortUrl", async (req, res) => {
-  console.log("Request params : ", req.params);
   const url = await shortener1.getUrl(req.params.shortUrl);
-  console.log("The returned url is : ", url);
   if (url) {
     res.redirect(url);
   } else {
