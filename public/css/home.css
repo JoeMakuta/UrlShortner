@@ -36,7 +36,7 @@ p {
   gap: 30px;
   align-items: center;
   background: white;
-  height: 20rem;
+  height: 25rem;
   width: 50rem;
   border-radius: 5px;
   box-shadow: 1px 1px 20px #e0e0e0;
@@ -48,8 +48,9 @@ p {
 }
 
 .main-home > form > label {
-  font-size: 14px;
+  font-size: 25px;
   font-weight: 300;
+  font-weight: 700;
 }
 
 .main-home > form > div {
@@ -79,10 +80,12 @@ p {
 
 .main-home > form > div > input {
   border-width: 2px;
+
   border-color: #b3b3b3;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   border-style: solid;
+  border-right: none;
   width: 50rem;
   max-width: 70%;
   height: 50px;
