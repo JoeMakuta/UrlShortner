@@ -1,37 +1,31 @@
 import express from "express";
 import shortener from "./shortener.js"; // Assuming shortener.js is in the same directory
-import cons from "consolidate";
-
 import clipboardy from "clipboardy";
 import { fileURLToPath } from "url";
-
 import dotenv from "dotenv";
 dotenv.config();
 
 import path from "path";
-const app = express();
-const shortener1 = new shortener();
 
+const shortener1 = new shortener();
+const app = express();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const testUrlRegex =
   /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
 
 app.use(express.urlencoded({ extended: true }));
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-app.engine("html", cons.swig);
-app.set("views", path.join(__dirname, "views")); // Set the template folder to an empty string to use the root directory
-app.set("view engine", "html"); // Set the view engine to handle HTML files
+app.set("views", "views"); // Set the template folder to an empty string to use the root directory
+app.set("view engine", "ejs"); // Set the view engine to handle HTML files
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
-  res.render("home.html");
+  res.render("home.ejs");
 });
 
 app.post("/copy", (req, res) => {
   const { url } = req.body;
   if (url) clipboardy.writeSync(req.body?.url);
-  res.redirect();
+  res.redirect("/");
 });
 
 app.post("/shorten", async (req, res) => {
@@ -41,7 +35,7 @@ app.post("/shorten", async (req, res) => {
 
   if (url.match(testUrlRegex)) {
     const shortUrl = await shortener1.shorten(req.body.url);
-    res.render("result.html", {
+    res.render("result.ejs", {
       base: req.protocol + "://" + req.get("host") + "/",
       shortUrl,
     });

@@ -13,10 +13,9 @@
   "license": "ISC",
   "dependencies": {
     "clipboardy": "^3.0.0",
-    "consolidate": "^0.16.0",
     "dotenv": "^16.0.3",
+    "ejs": "^3.1.9",
     "express": "^4.18.2",
-    "sqlite3": "^5.1.6",
-    "swig": "^1.4.2"
+    "sqlite3": "^5.1.6"
   }
 }

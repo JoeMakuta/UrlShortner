@@ -4,28 +4,19 @@
 <head>
    <title>URL Shortener</title>
    <link rel="stylesheet" href="/css/result.css">
-   <script>
-      const copyToClipBoard = () => {
-         const inputResult = document.getElementById("result")
-         inputResult.select()
-         inputResult.setSelectionRange(0, 99999);
-         navigator.clipboard.writeText(inputResult.value);
-         alert("Copied the text: " + inputResult.value);
-         console.log("Clicked")
-      }
-   </script>
+   <script src="/js/script.js"></script>
 </head>
 
 <body>
    <main class="main-home">
-      <form method="post" action="/copy">
+      <form method="get" action="/">
          <div>
             <h1 class=" title ">URL <span>Shortener</span></h1>
             <p>The Shortened url is : </p>
             <div>
-               <input placeholder="Enter the link here : " type="url" value="{{ base }}{{ shortUrl }}" name="url"
-                  id="url" id="result" required>
-               <button type="submit">Copy</button>
+               <input placeholder="Enter the link here : " type="url" value="<%= base + shortUrl %>" name="url"
+                  id="result" disabled required>
+               <button onclick={copyToClipBoard()} id="copy" type="button">Copy</button>
             </div>
             <p>
                ShortURL is a free tool to shorten URLs and generate short links
