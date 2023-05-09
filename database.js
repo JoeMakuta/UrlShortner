@@ -1,4 +1,5 @@
-const sqlite3 = require("sqlite3").verbose();
+import sqlite3 from "sqlite3";
+sqlite3.verbose();
 /////////////////////////////////////////////////////////////
 ///
 ///You can select a database based on your specific needs.///
@@ -58,4 +59,4 @@ class Database {
   }
 }
 
-module.exports = Database;
+export default Database;

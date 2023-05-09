@@ -4,19 +4,27 @@
 <head>
    <title>URL Shortener</title>
    <link rel="stylesheet" href="/css/result.css">
+   <script>
+      const copyToClipBoard = () => {
+         const inputResult = document.getElementById("result")
+         inputResult.select()
+         inputResult.setSelectionRange(0, 99999);
+         navigator.clipboard.writeText(inputResult.value);
+         alert("Copied the text: " + inputResult.value);
+         console.log("Clicked")
+      }
+   </script>
 </head>
 
 <body>
    <main class="main-home">
-
-      <form method="get" class="form1" action="/">
-
+      <form method="post" action="/copy">
          <div>
             <h1 class=" title ">URL <span>Shortener</span></h1>
             <p>The Shortened url is : </p>
             <div>
                <input placeholder="Enter the link here : " type="url" value="{{ base }}{{ shortUrl }}" name="url"
-                  disabled id="url" type="url" required>
+                  id="url" id="result" required>
                <button type="submit">Copy</button>
             </div>
             <p>
@@ -28,6 +36,7 @@
 
       </form>
    </main>
+
 </body>
 
 </html>

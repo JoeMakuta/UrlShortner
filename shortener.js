@@ -1,4 +1,4 @@
-const Database = require("./database"); // Assuming database.js is in the same directory
+import Database from "./database.js"; // Assuming database.js is in the same directory
 
 class Shortener {
   constructor() {
@@ -21,4 +21,4 @@ class Shortener {
   }
 }
 
-module.exports = Shortener;
+export default Shortener;
