@@ -11,9 +11,11 @@ const testUrlRegex =
   /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
 
 app.use(express.urlencoded({ extended: true }));
+
 app.engine("html", cons.swig);
 app.set("views", path.join(__dirname, "views")); // Set the template folder to an empty string to use the root directory
 app.set("view engine", "html"); // Set the view engine to handle HTML files
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
   res.render("home.html");
