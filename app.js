@@ -22,7 +22,6 @@ app.get("/", (req, res) => {
   res.render("home.ejs");
 });
 
-
 app.post("/shorten", async (req, res) => {
   const { url } = req.body;
 
@@ -40,9 +39,7 @@ app.post("/shorten", async (req, res) => {
 });
 
 app.get("/:shortUrl", async (req, res) => {
-  console.log("Request params : ", req.params);
   const url = await shortener1.getUrl(req.params.shortUrl);
-  console.log("The returned url is : ", url);
   if (url) {
     res.redirect(url);
   } else {

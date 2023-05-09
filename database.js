@@ -34,9 +34,7 @@ class Database {
     let insert = "INSERT INTO links (url, shortUrl) VALUES (?,?)";
     this.db.run(insert, [url, short_url], (error) => {
       if (!error) {
-        console.log("Data Inserted Successfully");
       } else {
-        console.log("Error trying to insert Data", error);
       }
     });
   }
@@ -47,10 +45,8 @@ class Database {
       let find = "SELECT * FROM links WHERE url=?";
       await this.db.get(find, [url], (error, row) => {
         if (!error) {
-          console.log("Got Data from DB Successfully : ", row);
           resolve(row);
         } else {
-          console.log("Got error when trying to get Data from DB : ", error);
           rejected();
         }
       });
@@ -63,10 +59,8 @@ class Database {
       let find = "SELECT * FROM links WHERE shortUrl=?";
       await this.db.get(find, [short_url], (error, row) => {
         if (!error) {
-          console.log("Got Data from DB Successfully : ", row);
           resolve(row);
         } else {
-          console.log("Got error when trying to get Data from DB : ", error);
           rejected();
         }
       });
