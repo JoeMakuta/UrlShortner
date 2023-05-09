@@ -22,11 +22,6 @@ app.get("/", (req, res) => {
   res.render("home.ejs");
 });
 
-app.post("/copy", (req, res) => {
-  const { url } = req.body;
-  if (url) clipboardy.writeSync(req.body?.url);
-  res.redirect("/");
-});
 
 app.post("/shorten", async (req, res) => {
   const { url } = req.body;

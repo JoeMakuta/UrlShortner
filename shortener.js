@@ -7,8 +7,13 @@ class Shortener {
 
   async shorten(url) {
     let shortUrl = this.generateShortUrl();
-    this.db.insert(url, shortUrl);
-    return shortUrl;
+    const longUrl = await this.db.getLongUrl(url);
+    if (longUrl) {
+      return longUrl?.shortUrl;
+    } else {
+      this.db.insert(url, shortUrl);
+      return shortUrl;
+    }
   }
 
   generateShortUrl() {
